@@ -6,10 +6,12 @@ import java.util.Properties;
 
 public class ProducerExample implements MyProducer{
 
-    Producer<String, String> producer;
+    private String topicName;
+    private Producer<String, String> producer;
 
-    public ProducerExample() {
+    public ProducerExample(String topicName) {
         config();
+        this.topicName = topicName;
     }
 
     void config() {
@@ -28,7 +30,7 @@ public class ProducerExample implements MyProducer{
 
     @Override
     public void sendToTopic(String id, String message) {
-        producer.send(new ProducerRecord<String, String>("test", id, message));
+        producer.send(new ProducerRecord<String, String>(topicName, id, message));
     }
 
     @Override

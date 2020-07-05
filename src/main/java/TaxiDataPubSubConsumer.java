@@ -16,7 +16,7 @@ public class TaxiDataPubSubConsumer {
         this.producer = producer;
     }
 
-    public void subscribeAsyncExample(String projectId, String subscriptionId) {
+    public void consumeDataAndSendToTopic(String projectId, String subscriptionId) {
         ProjectSubscriptionName subscriptionName =
                 ProjectSubscriptionName.of(projectId, subscriptionId);
 
@@ -26,6 +26,13 @@ public class TaxiDataPubSubConsumer {
                     consumer.ack();
                 };
 
+        initSubscriptionAndReceiverForFixedTime(subscriptionName, receiver);
+    }
+
+    private void initSubscriptionAndReceiverForFixedTime(
+            ProjectSubscriptionName subscriptionName,
+            MessageReceiver receiver
+    ) {
         Subscriber subscriber = null;
         try {
             subscriber = Subscriber.newBuilder(subscriptionName, receiver).build();
