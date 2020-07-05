@@ -23,7 +23,7 @@ public class ProducerExample implements MyProducer{
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        Producer<String, String> producer = new KafkaProducer<>(props);
+        producer = new KafkaProducer<>(props);
     }
 
     @Override
