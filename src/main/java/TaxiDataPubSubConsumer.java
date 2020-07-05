@@ -9,14 +9,14 @@ import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.PubsubMessage;
 
 public class TaxiDataPubSubConsumer {
-    public static void main(String... args) throws Exception {
-        String projectId = "qwiklabs-gcp-02-088571c83461";
-        String subscriptionId = "taxi-test-sub";
 
-        subscribeAsyncExample(projectId, subscriptionId);
+    private MyProducer producer;
+
+    public TaxiDataPubSubConsumer(MyProducer producer) {
+        this.producer = producer;
     }
 
-    public static void subscribeAsyncExample(String projectId, String subscriptionId) {
+    public void subscribeAsyncExample(String projectId, String subscriptionId) {
         ProjectSubscriptionName subscriptionName =
                 ProjectSubscriptionName.of(projectId, subscriptionId);
 

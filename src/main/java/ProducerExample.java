@@ -4,12 +4,15 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.util.Properties;
 
-public class ProducerExample {
-    public static void main(String[] args) {
-        sendToTopic();
+public class ProducerExample implements MyProducer{
+
+    Producer<String, String> producer;
+
+    public ProducerExample() {
+        config();
     }
 
-    static void sendToTopic() {
+    void config() {
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("acks", "all");
@@ -21,9 +24,15 @@ public class ProducerExample {
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         Producer<String, String> producer = new KafkaProducer<>(props);
-        for (int i = 10; i < 20; i++)
-            producer.send(new ProducerRecord<String, String>("test", Integer.toString(i), Integer.toString(i)));
+    }
 
+    @Override
+    public void sendToTopic(String id, String message) {
+        producer.send(new ProducerRecord<String, String>("test", id, message));
+    }
+
+    @Override
+    public void close() {
         producer.close();
     }
 }
